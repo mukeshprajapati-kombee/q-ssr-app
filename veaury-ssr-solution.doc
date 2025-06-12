@@ -1,0 +1,70 @@
+You are seeing this error because your installed version of Veaury is a **CommonJS** module, and Vite (and ESM) cannot use named imports from CommonJS modules.  
+Additionally, the function `applyPureReactInVue` may not exist in your version (it’s only in Veaury v2+).
+
+**Here’s how to fix it:**
+
+---
+
+## 1. Use the CommonJS Import Style
+
+Replace your import with:
+```js
+import veaury from 'veaury'
+const { applyReactInVue } = veaury
+const ReactInVue = applyReactInVue(HelloReact)
+```
+> **Note:** Use `applyReactInVue` (not `applyPureReactInVue`) if you are on Veaury v1.x, which is the case for most stable npm installs.
+
+---
+
+## 2. If you specifically want `applyPureReactInVue` (Veaury v2+)
+
+- Upgrade Veaury to the next version:
+  ```bash
+  npm install veaury@next
+  ```
+- Then use:
+  ```js
+  import veaury from 'veaury'
+  const { applyPureReactInVue } = veaury
+  const ReactInVue = applyPureReactInVue(HelloReact)
+  ```
+
+---
+
+## 3. If you want to stick with the stable version (recommended for most users)
+
+**Update your `<script setup>` to:**
+```js
+<script setup>
+import HelloReact from 'src/react/HelloReact.jsx'
+import veaury from 'veaury'
+const { applyReactInVue } = veaury
+const ReactInVue = applyReactInVue(HelloReact)
+</script>
+```
+
+---
+
+## 4. If you still get errors
+
+Try:
+```js
+import * as veaury from 'veaury'
+const { applyReactInVue } = veaury
+const ReactInVue = applyReactInVue(HelloReact)
+```
+
+---
+
+## **Summary Table**
+
+| Veaury Version | Import Style                                 | Function to Use           |
+|----------------|----------------------------------------------|---------------------------|
+| 1.x (stable)   | `import veaury from 'veaury'`                | `applyReactInVue`         |
+| 2.x (next)     | `import veaury from 'veaury'`                | `applyPureReactInVue`     |
+
+---
+
+**Try the above and your error should be resolved!**  
+Let me know if you want to upgrade to v2 or stick with v1.
