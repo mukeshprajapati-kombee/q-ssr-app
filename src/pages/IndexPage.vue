@@ -1,12 +1,14 @@
 // ReactInVue.vue
 <template>
-  <div ref="reactRoot"></div>
+  <div>
+    <div ref="reactRoot"></div>
+    <div v-if="clicked">You clicked the React button!</div>
+  </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, onBeforeUnmount, ref, watch } from 'vue';
+import { defineComponent, ref, onMounted, onBeforeUnmount, watch } from 'vue';
 import { renderHelloReact } from '../utils/renderHelloReact';
-import HelloReact from '../react/HelloReact.jsx';
 
 export default defineComponent({
   name: 'ReactInVue',
@@ -18,11 +20,16 @@ export default defineComponent({
   },
   setup(props) {
     const reactRoot = ref<HTMLElement | null>(null);
+    const clicked = ref(false);
     let root: any;
+
+    const handleReactClick = () => {
+      clicked.value = true;
+    };
 
     onMounted(() => {
       if (reactRoot.value) {
-        root = renderHelloReact(reactRoot.value, props.message);
+        root = renderHelloReact(reactRoot.value, props.message, handleReactClick);
       }
     });
 
@@ -30,7 +37,7 @@ export default defineComponent({
       () => props.message,
       (newVal) => {
         if (reactRoot.value) {
-          renderHelloReact(reactRoot.value, newVal);
+          renderHelloReact(reactRoot.value, newVal, handleReactClick);
         }
       },
     );
@@ -39,7 +46,7 @@ export default defineComponent({
       root?.unmount();
     });
 
-    return { reactRoot };
+    return { reactRoot, clicked };
   },
 });
 </script>

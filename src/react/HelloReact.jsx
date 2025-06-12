@@ -1,7 +1,11 @@
 import React from 'react';
 
-const HelloReact = ({ name }) => {
-  return <div>Hello Mukesh from React, {name}!</div>;
+const HelloReact = ({ name, onClick }) => {
+  return (
+    <div>
+      Hello from React, {name}!<button onClick={onClick}>Click me</button>
+    </div>
+  );
 };
 
 export default HelloReact;
