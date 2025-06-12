@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, onMounted, onBeforeUnmount, watch } from 'vue';
-import { renderHelloReact } from '../utils/renderHelloReact';
+import { renderHelloReact } from '../utils-backups/renderHelloReact';
 
 export default defineComponent({
   name: 'ReactInVue',

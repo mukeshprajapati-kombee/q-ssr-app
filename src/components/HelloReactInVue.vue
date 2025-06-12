@@ -7,7 +7,7 @@
 
 <script setup>
 import HelloReact from '../react/HelloReact.jsx';
-import applyReactInVue from '../utils/applyReactInVue.js';
+import applyReactInVue from '../utils-backups/applyReactInVue.js';
 
 const ReactInVue = applyReactInVue(HelloReact);
 </script>
